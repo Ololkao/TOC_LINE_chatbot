@@ -107,7 +107,7 @@ def webhook_handler():
 
     return "OK"
 
-
+# show fsm graph
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
     machine.get_graph().draw("fsm.png", prog="dot", format="png")
@@ -116,4 +116,4 @@ def show_fsm():
 
 if __name__ == "__main__":
     port = os.environ.get("PORT", 8000)
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host="0.0.0.0", port=port, debug=True, reloader=True)
