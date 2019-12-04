@@ -32,7 +32,7 @@ machine = TocMachine(
     initial="user",
     auto_transitions=False,
     show_conditions=True,
-    finalize_event='action_output_graph', use_pygraphviz=False
+    use_pygraphviz=False
 )
 
 app = Flask(__name__, static_url_path="")
