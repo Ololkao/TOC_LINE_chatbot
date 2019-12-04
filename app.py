@@ -27,11 +27,12 @@ machine = TocMachine(
             "dest": "state2",
             "conditions": "is_going_to_state2",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"}
     ],
     initial="user",
     auto_transitions=False,
     show_conditions=True,
+    finalize_event='action_output_graph', use_pygraphviz=False
 )
 
 app = Flask(__name__, static_url_path="")
@@ -112,6 +113,7 @@ def webhook_handler():
 def show_fsm():
     machine.get_graph().draw("fsm.png", prog="dot", format="png")
     return send_file("fsm.png", mimetype="image/png")
+    # return "OK"
 
 
 if __name__ == "__main__":
