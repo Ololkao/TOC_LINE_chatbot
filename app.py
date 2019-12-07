@@ -1,11 +1,11 @@
 import os
 import sys
 
-from flask import Flask, jsonify, request, abort, send_file
+from flask import Flask, jsonify, request, abort, send_file, send_from_directory
 from dotenv import load_dotenv
-from linebot import LineBotApi, WebhookParser
+from linebot import LineBotApi, WebhookParser, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, ImageMessage, TextSendMessage, ImageSendMessage
 
 from fsm import TocMachine
 from utils import send_text_message
@@ -50,7 +50,7 @@ if channel_access_token is None:
 
 line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
-
+# handler = WebhookHandler(channel_secret)
 
 @app.route("/callback", methods=["POST"])
 def callback():
@@ -111,11 +111,27 @@ def webhook_handler():
 # show fsm graph
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
-    # machine.get_graph().draw("fsm.png", prog="dot", format="png")
-    # return send_file("fsm.png", mimetype="image/png")
-    machine.get_graph().generate().render("fsm.png", format="png")
-    return "OK"
+    machine.get_graph().draw("fsm.png", prog="dot", format="png")
+    return send_file("fsm.png", mimetype="image/png", as_attachment=True)
+    # return send_from_directory(".","fsm.png")
 
+@app.route("/show-fsm", methods=['POST'])
+def handle_image_message():
+    signature = request.headers["X-Line-Signature"]
+    # get request body as text
+    body = request.get_data(as_text=True)
+    app.logger.info(f"Request body: {body}")
+
+    # parse webhook body
+    try:
+        events = parser.parse(body, signature)
+    except InvalidSignatureError:
+        abort(400)
+
+    for event in events:
+        url = "https://i.imgur.com/rhIgq1g.png"
+        line_bot_api.reply_message(event.reply_token, ImageSendMessage(url, url))
+        return "OK"
 
 if __name__ == "__main__":
     port = os.environ.get("PORT", 8000)
