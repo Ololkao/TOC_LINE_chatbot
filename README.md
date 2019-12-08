@@ -38,7 +38,7 @@ You should issue these on LINE Developers, and **MUST** copy and paste them to `
 
 
 # 
-## Deploy to HEROKU
+## Deployment
 Connect to Heroku in order to deploy.
 
 ### Heroku CLI installation
@@ -104,8 +104,7 @@ After that, `ngrok` would generate a https URL.	(*eg. https://464ac8bf.ngrok.io*
 
 Paste the https URL to the webhook URL on LINE Developers.
 
-
-Next, add one of these in the end to check the functions.
+**You can add one of these in the end to check the functions.**
 
 > /callback	-> Echo every text messages you send
 
