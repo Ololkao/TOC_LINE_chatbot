@@ -18,7 +18,6 @@ Every time `user` state is triggered to `advance` to another state, it will `go_
 
 
 ## Setup
-
 ### Prerequisite
 * Python 3.6
 * Line App and Developers
@@ -37,12 +36,13 @@ A `.env` file is needed to store `LINE_CHANNEL_SECRET` and `LINE_CHANNEL_ACCESS_
 You should issue these on LINE Developers, and **MUST** copy and paste them to `.env` correctly.
 
 
+
 ## Deploy to HEROKU
 Connect to Heroku in order to deploy.
-
 ### Heroku CLI installation
 
 * [macOS, Windows](https://devcenter.heroku.com/articles/heroku-cli)
+
 
 ### Upload project to Heroku
 
@@ -84,6 +84,7 @@ Connect to Heroku in order to deploy.
 #### Run Locally
 You can either setup https server or using `ngrok` as a proxy.
 
+
 #### Ngrok
 * [ macOS, Windows, Linux](https://ngrok.com/download)
 
@@ -102,6 +103,7 @@ Next, add one of these in the end to check the functions.
 + /webhook	-> Check the functionality of states
 + /show-fsm	-> Download the diagram of FSM or send the image on LINE
 
+
 #### Run the server
 
 ```sh
@@ -109,4 +111,5 @@ python3 app.py
 ```
 
 Now the app is running on localhost, we can check the webhook events.
+
 By using ngrok, we can debug and check the status easily and conveniently.
