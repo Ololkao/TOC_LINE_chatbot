@@ -37,7 +37,7 @@ A `.env` file is needed to store `LINE_CHANNEL_SECRET` and `LINE_CHANNEL_ACCESS_
 You should issue these on LINE Developers, and **MUST** copy and paste them to `.env` correctly.
 
 
-## 
+### 
 ## Deploy to HEROKU
 Connect to Heroku in order to deploy.
 
