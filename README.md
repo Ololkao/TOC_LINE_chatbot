@@ -109,7 +109,7 @@ Paste the https URL to the webhook URL on LINE Developers.
 
 > /webhook	-> Check the functionality of states
 
-> /show-fsm	-> Download the diagram of FSM or send the image on LINE
+> /show-fsm	-> Download the diagram of FSM or receive the image on LINE
 
 
 #### Run the server
