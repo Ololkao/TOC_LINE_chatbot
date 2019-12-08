@@ -38,6 +38,7 @@ You should issue these on LINE Developers, and **MUST** copy and paste them to `
 
 
 
+
 ## Deploy to HEROKU
 Connect to Heroku in order to deploy.
 
@@ -83,6 +84,7 @@ Connect to Heroku in order to deploy.
 	run commands below
 	```
 	heroku buildpacks:set heroku/python
+	
 	heroku buildpacks:add --index 1 heroku-community/apt
 	```
 
@@ -104,10 +106,13 @@ ngrok http 8000
 After that, `ngrok` would generate a https URL.	(*eg. https://464ac8bf.ngrok.io*)
 
 Paste the https URL to the webhook URL on LINE Developers.
+
 Next, add one of these in the end to check the functions.
 
 + /callback	-> Echo every text messages you send
+
 + /webhook	-> Check the functionality of states
+
 + /show-fsm	-> Download the diagram of FSM or send the image on LINE
 
 
