@@ -1,63 +1,13 @@
-Template Code for TOC Project 2020
+# TOC-chatbot
 
-A Line bot based on a finite state machine
+A chatbot based on LINE using a finite-state-machine.
 
-## Setup
-
-### Prerequisite
-* Python 3.6
-* Pipenv
-* Facebook Page and App
-* HTTPS Server
-
-#### Install Dependency
-```sh
-pip3 install pipenv
-
-pipenv --three
-
-pipenv install
-
-pipenv shell
-```
-
-* pygraphviz (For visualizing Finite State Machine)
-    * [Setup pygraphviz on Ubuntu](http://www.jianshu.com/p/a3da7ecc5303)
-	* [Note: macOS Install error](https://github.com/pygraphviz/pygraphviz/issues/100)
-
-
-#### Secret Data
-You should generate a `.env` file to set Environment Variables refer to our `.env.sample`.
-`LINE_CHANNEL_SECRET` and `LINE_CHANNEL_ACCESS_TOKEN` **MUST** be set to proper values.
-Otherwise, you might not be able to run your code.
-
-#### Run Locally
-You can either setup https server or using `ngrok` as a proxy.
-
-#### Ngrok installation
-* [ macOS, Windows, Linux](https://ngrok.com/download)
-
-**`ngrok` would be used in the following instruction**
-
-```sh
-ngrok http 8000
-```
-
-After that, `ngrok` would generate a https URL.
-
-#### Run the sever
-
-```sh
-python3 app.py
-```
-
-## Finite State Machine
 ![fsm](./img/show-fsm.png)
 
-## Usage
+## States
 The initial state is set to `user`.
 
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
+Every time `user` state is triggered to `advance` to another state, it will `go_back` immediately to `user` state after the bot replies corresponding message.
 
 * user
 	* Input: "go to state1"
@@ -66,8 +16,29 @@ Every time `user` state is triggered to `advance` to another state, it will `go_
 	* Input: "go to state2"
 		* Reply: "I'm entering state2"
 
-## Deploy
-Setting to deploy webhooks on Heroku.
+
+## Setup
+
+### Prerequisite
+* Python 3.6
+* Line App and Developers
+* HTTPS Server
+* pygraphviz/graphviz(For visualizing FSM)
+
+
+#### Install Dependency
+```sh
+pip3 install -r requirements.txt
+```
+
+
+#### Secret Data
+A `.env` file is needed to store `LINE_CHANNEL_SECRET` and `LINE_CHANNEL_ACCESS_TOKEN`.
+You should issue these on LINE Developers, and **MUST** copy and paste them to `.env` correctly.
+
+
+## Deploy to HEROKU
+Connect to Heroku in order to deploy.
 
 ### Heroku CLI installation
 
@@ -93,19 +64,49 @@ Setting to deploy webhooks on Heroku.
 	heroku config:set LINE_CHANNEL_SECRET=your_line_channel_secret
 	heroku config:set LINE_CHANNEL_ACCESS_TOKEN=your_line_channel_access_token
 	```
+	
+	Or you can go to setting to set Config Vars on HEROKU.
 
 4. Your Project is now running on Heroku!
 
 	url: `{HEROKU_APP_NAME}.herokuapp.com/callback`
-
 	debug command: `heroku logs --tail --app {HEROKU_APP_NAME}`
 
-5. If fail with `pygraphviz` install errors
+5. Dealing with `pygraphviz` install errors
 
-	run commands below can solve the problems
+	run commands below
 	```
 	heroku buildpacks:set heroku/python
 	heroku buildpacks:add --index 1 heroku-community/apt
 	```
 
-	refference: https://hackmd.io/@ccw/B1Xw7E8kN?type=view#Q2-如何在-Heroku-使用-pygraphviz
+
+#### Run Locally
+You can either setup https server or using `ngrok` as a proxy.
+
+#### Ngrok
+* [ macOS, Windows, Linux](https://ngrok.com/download)
+
+**`ngrok` would be used in the following instruction**
+
+```sh
+ngrok http 8000
+```
+
+After that, `ngrok` would generate a https URL.	(*eg. https://464ac8bf.ngrok.io*)
+
+Paste the https URL to the webhook URL on LINE Developers.
+Next, add one of these in the end to check the functions.
+
++ /callback	-> Echo every text messages you send
++ /webhook	-> Check the functionality of states
++ /show-fsm	-> Download the diagram of FSM or send the image on LINE
+
+#### Run the server
+
+```sh
+python3 app.py
+```
+
+Now the app is running on localhost, we can check the webhook events.
+By using ngrok, we can debug and check the status easily and conveniently.
