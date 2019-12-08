@@ -74,8 +74,10 @@ Connect to Heroku in order to deploy.
 
 4. Your Project is now running on Heroku!
 
+	```
 	url: `{HEROKU_APP_NAME}.herokuapp.com/callback`
 	debug command: `heroku logs --tail --app {HEROKU_APP_NAME}`
+	```
 
 
 5. Dealing with `pygraphviz` install errors
@@ -87,8 +89,7 @@ Connect to Heroku in order to deploy.
 	heroku buildpacks:add --index 1 heroku-community/apt
 	```
 
-
-
+# 
 #### Run Locally
 You can either setup https server or using `ngrok` as a proxy.
 
