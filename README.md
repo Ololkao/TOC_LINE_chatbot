@@ -50,8 +50,9 @@ Connect to Heroku in order to deploy.
 
 1. Add local project to Heroku project
 
+	```
 	heroku git:remote -a {HEROKU_APP_NAME}
-
+	```
 
 2. Upload project
 
@@ -60,7 +61,6 @@ Connect to Heroku in order to deploy.
 	git commit -m "Add code"
 	git push -f heroku master
 	```
-
 
 3. Set Environment - Line Messaging API Secret Keys
 
@@ -71,14 +71,12 @@ Connect to Heroku in order to deploy.
 	
 	Or you can go to setting to set Config Vars on HEROKU.
 
-
 4. Your Project is now running on Heroku!
 
 	```
 	url: `{HEROKU_APP_NAME}.herokuapp.com/callback`
 	debug command: `heroku logs --tail --app {HEROKU_APP_NAME}`
 	```
-
 
 5. Dealing with `pygraphviz` install errors
 
@@ -107,14 +105,12 @@ After that, `ngrok` would generate a https URL.	(*eg. https://464ac8bf.ngrok.io*
 
 Paste the https URL to the webhook URL on LINE Developers.
 
+
 Next, add one of these in the end to check the functions.
 
-+ /callback	-> Echo every text messages you send
-
-+ /webhook	-> Check the functionality of states
-
-+ /show-fsm	-> Download the diagram of FSM or send the image on LINE
-
+> /callback	-> Echo every text messages you send
+> /webhook	-> Check the functionality of states
+> /show-fsm	-> Download the diagram of FSM or send the image on LINE
 
 
 #### Run the server
