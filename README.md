@@ -80,7 +80,6 @@ Connect to Heroku in order to deploy.
 
 5. Dealing with `pygraphviz` install errors
 
-	run commands below
 	```
 	heroku buildpacks:set heroku/python
 	
@@ -109,7 +108,9 @@ Paste the https URL to the webhook URL on LINE Developers.
 Next, add one of these in the end to check the functions.
 
 > /callback	-> Echo every text messages you send
+
 > /webhook	-> Check the functionality of states
+
 > /show-fsm	-> Download the diagram of FSM or send the image on LINE
 
 
