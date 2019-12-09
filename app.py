@@ -13,26 +13,22 @@ from utils import send_text_message
 load_dotenv()
 
 machine = TocMachine(
-    states=["user", "state1", "state2"],
+    states=["conscription", "soldier", "freedom", "exemption"],
     transitions=[
-        {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
-        },
-        {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
-        },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"}
-    ],
-    initial="user",
+        {"trigger": "advance", "source": "conscription", "dest": "soldier", "conditions": "fulfill_obligations"},
+        {"trigger": "advance", "source": "conscription", "dest": "freedom", "conditions": "not_passing_checkup"},
+        {"trigger": "advance", "source": "soldier", "dest": "freedom", "conditions": "honorary_discharged"},
+        {"trigger": "advance", "source": "soldier", "dest": "exemption", "conditions": "with_a_separation"},
+        {"trigger": "advance", "source": "soldier", "dest": "=", "conditions": "some_basic_things",},
+        {"trigger": "advance", "source": "exemption", "dest": "soldier", "conditions": "go_checkup_again",},
+        {"trigger": "advance", "source": "exemption", "dest": "freedom", "conditions": "exempt_from_duty",},
+        {"trigger": "advance", "source": "freedom", "dest": "conscription"}
+                ],
+    
+    initial="conscription",
     auto_transitions=False,
     show_conditions=True,
-    # use_pygraphviz=False
+    # show_auto_transitions=True
 )
 
 app = Flask(__name__, static_url_path="")
@@ -71,10 +67,10 @@ def callback():
             continue
         if not isinstance(event.message, TextMessage):
             continue
-
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=event.message.text)
-        )
+        response = machine.advance(event)
+        if response == False:
+            send_text_message(event.reply_token, "你在工蝦餃")
+        # line_bot_api.reply_message( event.reply_token, TextSendMessage(text=event.message.text) )
 
     return "OK"
 
@@ -92,7 +88,6 @@ def webhook_handler():
     except InvalidSignatureError:
         abort(400)
 
-    # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
         if not isinstance(event, MessageEvent):
             continue
@@ -112,9 +107,9 @@ def webhook_handler():
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
     machine.get_graph().draw("fsm.png", prog="dot", format="png")
-    return send_file("fsm.png", mimetype="image/png", as_attachment=True)
+    return send_file("fsm.png", mimetype="image/png")#, as_attachment=True)
     # return send_from_directory(".","fsm.png")
-
+    
 @app.route("/show-fsm", methods=['POST'])
 def handle_image_message():
     signature = request.headers["X-Line-Signature"]
@@ -128,10 +123,10 @@ def handle_image_message():
     except InvalidSignatureError:
         abort(400)
 
-    for event in events:
-        url = "https://i.imgur.com/rhIgq1g.png"
-        line_bot_api.reply_message(event.reply_token, ImageSendMessage(url, url))
-        return "OK"
+    # for event in events:
+    #     url = "https://i.imgur.com/rhIgq1g.png"
+    #     line_bot_api.reply_message(event.reply_token, ImageSendMessage(url, url))
+    #     return "OK"
 
 if __name__ == "__main__":
     port = os.environ.get("PORT", 8000)
