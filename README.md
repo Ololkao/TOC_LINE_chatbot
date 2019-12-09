@@ -2,7 +2,7 @@
 
 A chatbot based on LINE using a finite-state-machine.
 
-![fsm](./img/show-fsm.png)
+![fsm](./fsm.png)
 
 ## States
 The initial state is set to `user`.
