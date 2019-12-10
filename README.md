@@ -1,20 +1,30 @@
 # TOC-chatbot
 
-A chatbot based on LINE using a finite-state-machine.
+A chatbot based on LINE using a finite-state-machine. 
+
+Since it is an obligation for men to have a military service, I want to share what I have seen last summer.
+I wish the bot could be a good advice for those who are going to serve in the military, but I have another two months next summer, so it still has some space to make a progress after experiencing more.
 
 ![fsm](./fsm.png)
 
 ## States
-The initial state is set to `user`.
+### conscription(役男)
+The initial state is set to `conscription`.
 
-Every time `user` state is triggered to `advance` to another state, it will `go_back` immediately to `user` state after the bot replies corresponding message.
+### soldier(當兵)
+The state of being a soldier. You can input some keywords here, for example
+	* Input: "...掃地..."
+		* Reply: "每天除了掃地、掃地，還是掃地"
+	* Input: "...起床..."
+		* Reply: "現在時間洞六洞洞，部隊起床"
+	* Input: "...軍歌..."
+		* Reply: "風雲起，山河動，黃埔建軍聲勢雄"
 
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
+### exemption(驗退)
+Whenever entering on this state, the bot will send *計画通り* to the user.
 
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
+### freedom(自由)
+The final state of the fsm, and it will advance to `conscription` again whenever users sending text message.
 
 
 ## Setup
