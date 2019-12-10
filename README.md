@@ -29,6 +29,7 @@ Whenever entering on this state, the bot will send *計画通り* to the user.
 ### freedom(自由)
 The final state of the fsm, and it will advance to `conscription` again whenever users sending text message.
 
+In every states if the bot doesn't know the input message, it will reply `你在工蝦餃`
 
 ## Setup
 ### Prerequisite
