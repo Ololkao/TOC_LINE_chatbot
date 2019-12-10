@@ -13,10 +13,13 @@ The initial state is set to `conscription`.
 
 ### soldier(當兵)
 The state of being a soldier. You can input some keywords here, for example
+
 	* Input: "...掃地..."
 		* Reply: "每天除了掃地、掃地，還是掃地"
+		
 	* Input: "...起床..."
 		* Reply: "現在時間洞六洞洞，部隊起床"
+		
 	* Input: "...軍歌..."
 		* Reply: "風雲起，山河動，黃埔建軍聲勢雄"
 
